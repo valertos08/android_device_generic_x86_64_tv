@@ -188,6 +188,7 @@ endif
 #                       vendor/google/proprietary/widevine-prebuilt/sepolicy
 #
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS := device/generic/common/sepolicy/plat_private
+BOARD_VENDOR_SEPOLICY_DIRS := device/generic/common/sepolicy/vendor
 
 TARGET_FLATTEN_APEX := true
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 4718592000
