@@ -500,8 +500,8 @@ function init_hal_hwcomposer()
 			start vendor.hwcomposer-2-1.drmfb
 			;;
 		default-2.1)
-			set_property debug.sf.hwc_service_name default
-			start vendor.hwcomposer-2-1
+			set_property debug.sf.hwc_service_name default_clone
+			start vendor.hwcomposer-2-1-clone
 			;;
 		default-2.4|*)
 			set_property debug.sf.hwc_service_name default

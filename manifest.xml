@@ -74,7 +74,7 @@
         <name>android.hardware.graphics.composer</name>
         <transport>hwbinder</transport>
         <fqname>@2.1::IComposer/drmfb</fqname>
-        <fqname>@2.1::IComposer/default</fqname>
+        <fqname>@2.1::IComposer/default_clone</fqname>
         <fqname>@2.4::IComposer/default</fqname>
     </hal>
     <hal format="hidl">
