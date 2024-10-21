@@ -29,7 +29,6 @@ PRODUCT_PACKAGES := \
     io_switch \
     libGLES_android \
     libhuaweigeneric-ril \
-    lights.default \
     make_ext4fs \
     parted \
     rtk_hciattach \

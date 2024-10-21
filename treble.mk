@@ -12,11 +12,9 @@ PRODUCT_PACKAGES += \
 
 # HWComposer HAL
 PRODUCT_PACKAGES += \
-    android.hardware.graphics.composer@2.1-impl \
-    android.hardware.graphics.composer@2.4-impl \
+    android.hardware.graphics.composer@2.1-drmfb-service \
     android.hardware.graphics.composer@2.1-service-clone \
-    android.hardware.graphics.composer@2.4-service \
-    android.hardware.graphics.composer@2.1-drmfb-service
+    android.hardware.graphics.composer@2.4-service
 
 # Audio HAL
 PRODUCT_PACKAGES += \
@@ -29,11 +27,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.bluetooth@1.1-service.vbt \
     android.hardware.bluetooth@1.1-service.btlinux \
-    android.hardware.bluetooth.audio@2.1-impl \
-
-# Camera HAL
-PRODUCT_PACKAGES += \
-    camera.x86
+    android.hardware.bluetooth.audio-impl
 
 # Media codec
 PRODUCT_PACKAGES += \
@@ -45,8 +39,7 @@ endif
 
 # DumpState HAL
 PRODUCT_PACKAGES += \
-    android.hardware.dumpstate@1.0-impl \
-    android.hardware.dumpstate@1.0-service.example
+    com.android.hardware.dumpstate
 
 # Gatekeeper HAL
 PRODUCT_PACKAGES += \
@@ -54,8 +47,8 @@ PRODUCT_PACKAGES += \
 
 # Health HAL
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-impl \
-    android.hardware.health@2.1-service
+    android.hardware.health-service.example \
+    android.hardware.health-service.example_recovery
 
 # Keymaster HAL
 PRODUCT_PACKAGES += \
@@ -63,20 +56,16 @@ PRODUCT_PACKAGES += \
 
 # Light HAL
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-impl \
-    android.hardware.light@2.0-service
+    android.hardware.light-service.x86
 
 # Memtrack HAL
 PRODUCT_PACKAGES += \
-    memtrack.default \
-    android.hardware.memtrack@1.0-impl \
-    android.hardware.memtrack@1.0-service
+    com.android.hardware.memtrack
 
 # Power HAL
 PRODUCT_PACKAGES += \
     power.x86 \
-    android.hardware.power@1.0-impl \
-    android.hardware.power@1.0-service
+    android.hardware.power-service.example
 
 # RenderScript HAL
 PRODUCT_PACKAGES += \
@@ -88,8 +77,7 @@ PRODUCT_PACKAGES += \
 
 # USB HAL
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-impl \
-    android.hardware.usb@1.0-service
+    android.hardware.usb-service.example
 
 # Drm HAL
 PRODUCT_PACKAGES += \
@@ -100,10 +88,6 @@ PRODUCT_PACKAGES += \
     android.hardware.gnss@1.0-impl \
     android.hardware.gnss@1.0-service
 
-# ConfigStore HAL
-PRODUCT_PACKAGES += \
-    android.hardware.configstore@1.1-service
-
 # Thermal HAL
 PRODUCT_PACKAGES += \
     android.hardware.thermal@aidl-service.intel
@@ -113,6 +97,9 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-x86impl \
     android.hardware.boot@1.2-x86impl.recovery \
     android.hardware.boot@1.2-service
+
+# HIDL Allocator
+PRODUCT_PACKAGES += android.hidl.allocator@1.0-service
 
 # vndservice & vndservicemanager & hwservicemanager
 PRODUCT_PACKAGES += vndservice vndservicemanager hwservicemanager

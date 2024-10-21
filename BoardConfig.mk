@@ -175,10 +175,12 @@ COMPATIBILITY_ENHANCEMENT_PACKAGE := true
 PRC_COMPATIBILITY_PACKAGE := true
 ZIP_OPTIMIZATION_NO_INTEGRITY := true
 
-DEVICE_MANIFEST_FILE := device/generic/common/manifest.xml
+DEVICE_MANIFEST_FILE := $(LOCAL_COMMON_TREE)/manifest.xml
 ifneq ($(TARGET_SUPPORTS_32_BIT_APPS),false)
-DEVICE_MANIFEST_FILE += device/generic/common/manifest_omx.xml
+DEVICE_MANIFEST_FILE += $(LOCAL_COMMON_TREE)/manifest_omx.xml
 endif
+
+DEVICE_PRODUCT_COMPATIBILITY_MATRIX_FILE := $(LOCAL_COMMON_TREE)/manifest_framework.xml
 
 #BOARD_SEPOLICY_DIRS += device/generic/common/sepolicy/nonplat \
 #                       system/bt/vendor_libs/linux/sepolicy \
@@ -187,8 +189,8 @@ endif
 #                       vendor/intel/proprietary/houdini/sepolicy \
 #                       vendor/google/proprietary/widevine-prebuilt/sepolicy
 #
-SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS := device/generic/common/sepolicy/plat_private
-BOARD_VENDOR_SEPOLICY_DIRS := device/generic/common/sepolicy/vendor
+SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS := $(LOCAL_COMMON_TREE)/sepolicy/plat_private
+BOARD_VENDOR_SEPOLICY_DIRS := $(LOCAL_COMMON_TREE)/sepolicy/vendor
 
 TARGET_FLATTEN_APEX := true
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 4718592000
