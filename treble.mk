@@ -31,7 +31,7 @@ PRODUCT_PACKAGES += \
 
 # Media codec
 PRODUCT_PACKAGES += \
-    android.hardware.media.c2@1.2-ffmpeg-service
+    android.hardware.media.c2-ffmpeg-service
 
 ifneq ($(TARGET_SUPPORTS_32_BIT_APPS),false)
 PRODUCT_PACKAGES += android.hardware.media.omx@1.0-service
