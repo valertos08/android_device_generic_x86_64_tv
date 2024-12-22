@@ -16,6 +16,8 @@ on early-init
     # mapping properties
     setprop ro.hardware.power ${ro.boot.hardware.power}
 
+	symlink /dev/hwrng /dev/hw_random
+
 on early-init && property:mesa.loader.override=*
     export MESA_LOADER_DRIVER_OVERRIDE ${mesa.loader.override}
 

@@ -71,7 +71,6 @@ function init_misc()
         set_property ro.vold.use_ntfs3 true
     fi
 
-	ln -s /dev/hwrng /dev/hw_random
 }
 
 function init_hal_audio()
