@@ -71,6 +71,9 @@ function init_misc()
         set_property ro.vold.use_ntfs3 true
     fi
 
+    if [ "$DEBUG_VSOCK" -ge "1" ]; then
+        set_property service.adb.listen_addrs "vsock:5555"
+    fi
 }
 
 function init_hal_audio()
