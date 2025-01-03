@@ -24,7 +24,7 @@ AB_OTA_PARTITIONS += \
 	ramdisk-recovery
 
 # Rootfs
-BOARD_ROOT_EXTRA_FOLDERS := grub
+BOARD_ROOT_EXTRA_FOLDERS := boot
 
 # Full treble
 PRODUCT_FULL_TREBLE_OVERRIDE := true
