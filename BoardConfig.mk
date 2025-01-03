@@ -189,8 +189,8 @@ DEVICE_PRODUCT_COMPATIBILITY_MATRIX_FILE := $(LOCAL_COMMON_TREE)/manifest_framew
 #                       vendor/intel/proprietary/houdini/sepolicy \
 #                       vendor/google/proprietary/widevine-prebuilt/sepolicy
 #
-SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS := $(LOCAL_COMMON_TREE)/sepolicy/plat_private
-BOARD_VENDOR_SEPOLICY_DIRS := $(LOCAL_COMMON_TREE)/sepolicy/vendor
+SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(LOCAL_COMMON_TREE)/sepolicy/plat_private
+BOARD_VENDOR_SEPOLICY_DIRS += $(LOCAL_COMMON_TREE)/sepolicy/vendor
 
 TARGET_FLATTEN_APEX := true
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 4718592000
