@@ -98,6 +98,19 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-x86impl.recovery \
     android.hardware.boot@1.2-service
 
+PRODUCT_SOONG_NAMESPACES += \
+    hardware/google/camera \
+    hardware/google/camera/devices/EmulatedCamera \
+
+PRODUCT_PACKAGES += \
+    android.hardware.camera.provider@2.7-service-google \
+    libgooglecamerahwl_impl
+
+PRODUCT_COPY_FILES += \
+    hardware/google/camera/devices/EmulatedCamera/hwl/configs/emu_camera_back.json:$(TARGET_COPY_OUT_VENDOR)/etc/config/emu_camera_back.json \
+    hardware/google/camera/devices/EmulatedCamera/hwl/configs/emu_camera_front.json:$(TARGET_COPY_OUT_VENDOR)/etc/config/emu_camera_front.json \
+    hardware/google/camera/devices/EmulatedCamera/hwl/configs/emu_camera_depth.json:$(TARGET_COPY_OUT_VENDOR)/etc/config/emu_camera_depth.json
+
 # HIDL Allocator
 PRODUCT_PACKAGES += android.hidl.allocator@1.0-service
 
