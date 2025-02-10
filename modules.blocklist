@@ -3,6 +3,7 @@ deferred nouveau
 deferred amdgpu
 deferred radeon
 deferred snd_hda_intel
+deferred soc_button_array
 blocklist rtw88_8821cu
 blocklist rtw88_8822bu
 blocklist rtw88_8822cu
