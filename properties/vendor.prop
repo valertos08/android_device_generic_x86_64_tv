@@ -9,3 +9,4 @@ ro.recovery.supported_fs=9p,virtiofs,efivarfs
 
 # Media
 debug.stagefright.c2inputsurface=-1
+media.c2.hal.selection=aidl
