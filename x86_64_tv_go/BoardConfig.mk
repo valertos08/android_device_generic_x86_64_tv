@@ -1,0 +1,1 @@
+-include device/generic/x86_64_tv/BoardConfig.mk

@@ -16,6 +16,9 @@
 
 PRODUCT_DIR := $(dir $(lastword $(filter-out device/common/%,$(filter device/%,$(ALL_PRODUCTS)))))
 
+# ATV
+PRODUCT_IS_ATV := true
+
 # No Compressed APEXes
 OVERRIDE_PRODUCT_COMPRESSED_APEX := false
 
@@ -44,10 +47,6 @@ PRODUCT_PACKAGES_DEBUG += \
     update_engine_client
 
 PRODUCT_PROPERTY_OVERRIDES := \
-    ro.ril.hsxpa=1 \
-    ro.ril.gprsclass=10 \
-    keyguard.no_require_sim=true \
-    ro.com.android.dataroaming=true \
     ro.lmk.kill_timeout_ms=100 \
     ro.arch=x86 \
     persist.rtc_local_time=1 \
@@ -57,7 +56,6 @@ PRODUCT_PROPERTY_OVERRIDES := \
     audio.safemedia.bypass=true \
     persist.device_config.mglru_native.lru_gen_config=all \
     persist.sys.zram_enabled=1 \
-    ro.setupwizard.mode=DISABLED \
     external_storage.casefold.enabled=1 \
     external_storage.projid.enabled=1
 
@@ -95,7 +93,6 @@ PRODUCT_COPY_FILES += \
 # Copy Vendor Files
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/external_camera_config.xml:$(TARGET_COPY_OUT_VENDOR)/etc/external_camera_config.xml \
-    frameworks/native/data/etc/tablet_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/tablet_core_hardware.xml \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.audio.low_latency.xml \
     frameworks/native/data/etc/android.hardware.bluetooth.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth.xml \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth_le.xml \
@@ -159,10 +156,10 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
 PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
-PRODUCT_CHARACTERISTICS := tablet
+PRODUCT_CHARACTERISTICS := tv
 
-PRODUCT_AAPT_CONFIG := normal large xlarge mdpi hdpi
-PRODUCT_AAPT_PREF_CONFIG := mdpi
+# AAPT
+PRODUCT_AAPT_PREF_CONFIG := tvdpi
 
 DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay
 
@@ -230,22 +227,6 @@ endif
 
 $(call inherit-product,$(if $(wildcard $(PRODUCT_DIR)packages.mk),$(PRODUCT_DIR),$(LOCAL_PATH)/)packages.mk)
 
-$(call inherit-product, $(SRC_TARGET_DIR)/product/handheld_vendor.mk)
-
-# Inherit common Bliss stuff
-ifneq ($(BOARD_IS_GO_BUILD),true)
-$(call inherit-product-if-exists,vendor/bliss/config/common_full_tablet.mk)
-else
-$(call inherit-product-if-exists,vendor/bliss/config/common_mini_tablet.mk)
-endif
-TARGET_FACE_UNLOCK_SUPPORTED := false
-TARGET_WANTS_FOD_ANIMATIONS := false
-PRODUCT_BROKEN_VERIFY_USES_LIBRARIES := true
-TARGET_BOOT_ANIMATION_RES := 720
-##CHOOSE THE BUILD YOU WANT HERE, FOSS OR OPENGAPPS
-#BLISS_BUILD_VARIANT := foss
-WITH_SU := false
-
 ifeq ($(BOARD_IS_GO_BUILD),true)
 ifeq ($(BOARD_IS_SURFACE_BUILD),true)
 $(error "Go build should not be mixed with Surface build")
@@ -255,8 +236,6 @@ $(error "Go build should not be mixed with Zenith build")
 endif
 # Inherit common Android Go configurations
 $(call inherit-product, build/target/product/go_defaults.mk)
-BLISS_SPECIAL_VARIANT := -Go
-PRODUCT_TYPE := go
 DONT_UNCOMPRESS_PRIV_APPS_DEXS := true
 endif
 
@@ -273,45 +252,13 @@ ifeq ($(BOARD_IS_ZENITH_BUILD),true)
 BLISS_SPECIAL_VARIANT := -Zenith
 endif
 
-# Widevine addons
-ifeq ($(USE_LIBNDK_TRANSLATION_NB),true)
-$(call inherit-product-if-exists, vendor/google/emu-x86/target/widevine.mk)
-endif
-
 ifeq ($(USE_WIDEVINE),true)
 $(call inherit-product-if-exists, vendor/google/chromeos-x86/target/widevine.mk)
 $(call inherit-product-if-exists, vendor/google/proprietary/widevine-prebuilt/widevine.mk)
 endif
 
-ifeq ($(USE_EMU_GAPPS),true)
-
-$(call inherit-product-if-exists, vendor/google/emu-x86/target/gapps.mk)
-
-endif
-
-ifeq ($(USE_OPENGAPPS),true)
-
-$(call inherit-product-if-exists, vendor/opengapps/gapps.mk)
-
-endif
-
-ifeq ($(ANDROID_INTEGRATE_MAGISK),true)
-$(call inherit-product-if-exists, vendor/supremegamers/kokoro/kokoro.mk)
-endif
-
 # Add agp-apps
 $(call inherit-product-if-exists, vendor/agp-apps/agp-apps.mk)
-
-# Add SettingsIntelligenceGooglePrebuilt
-$(call inherit-product-if-exists, vendor/google/proprietary/SettingsIntelligenceGooglePrebuilt/sigp.mk)
-
-# Boringdroid
-$(call inherit-product-if-exists, vendor/boringdroid/boringdroid.mk)
-
-# Enable MultiWindow
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.debug.multi_window=true
-    persist.sys.debug.desktop_mode=true
 
 # DRM service opt-in
 PRODUCT_VENDOR_PROPERTIES += drm.service.enabled=true

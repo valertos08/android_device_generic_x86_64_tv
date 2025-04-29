@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2016 The Android-x86 Open Source Project
+# Copyright (C) 2014 The Android-x86 Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,6 +13,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
+# Inherit from those products. Most specific first.
 $(call inherit-product,$(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product,$(LOCAL_PATH)/x86.mk)
+$(call inherit-product, device/google/atv/products/atv_base.mk)
+
+# Inherit some common Lineage stuff.
+$(call inherit-product, vendor/lineage/config/common_tv.mk)
+
+# Include from Android-x86 device
+$(call inherit-product,$(LOCAL_PATH)/device.mk)
+
+# Gapps if found
+$(call inherit-product-if-exists, vendor/gapps_tv/x86/x86-vendor.mk)
+
+# Overrides
+PRODUCT_NAME := lineage_x86_64_tv
+PRODUCT_BRAND := Android-x86
+PRODUCT_DEVICE := x86_64_tv
+PRODUCT_MODEL := Generic Android-x86_64

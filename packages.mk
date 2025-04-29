@@ -16,21 +16,12 @@
 
 # Common packages for Android-x86 platform.
 
-PRODUCT_PACKAGES := \
-    Taskbar \
-    chat \
+PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \
     drmserver \
-    eject \
     gps.default \
     gps.huawei \
-    hwcomposer.x86 \
-    icu.dat \
     io_switch \
-    libGLES_android \
-    libhuaweigeneric-ril \
-    make_ext4fs \
-    parted \
     rtk_hciattach \
     scp \
     sftp \
@@ -40,27 +31,11 @@ PRODUCT_PACKAGES := \
     v86d \
     wacom-input \
 
-ifeq ($(IS_GO_VERSION), true)
-
-ifeq ($(USE_TREBUCHET), true)
-
-PRODUCT_PACKAGES += \
-    TrebuchetQuickstepGo
-    
-else 
-
-PRODUCT_PACKAGES += \
-    Launcher3GoIconRecents
-
-endif
-endif
-
 PRODUCT_PACKAGES += \
     libwpa_client \
     hostapd \
     wificond \
-    wpa_supplicant \
-    wpa_supplicant.conf \
+    wpa_supplicant
 
 PRODUCT_PACKAGES += \
     e2fsck \
@@ -69,10 +44,6 @@ PRODUCT_PACKAGES += \
     mke2fs \
     make_f2fs \
     mkfs.exfat \
-    mkntfs \
-    mount.exfat \
-    ntfs-3g \
-    ntfsfix \
     resize2fs \
     tune2fs \
 
@@ -81,7 +52,6 @@ PRODUCT_PACKAGES += \
 	btmon \
     hciconfig \
     hcitool \
-    thermsys \
     thermal-daemon
 
 # Stagefright FFMPEG plugins
@@ -92,11 +62,8 @@ PRODUCT_PACKAGES += \
 
 # Third party apps
 PRODUCT_PACKAGES += \
-    Eleven \
-    native_bridge_stub_library_defaults \
     libnativebridge-headers \
     libnativeloader-headers \
-    libqemupipe \
     libandroidemu
 
 PRODUCT_HOST_PACKAGES, += \
@@ -122,13 +89,10 @@ PRODUCT_PACKAGES_DEBUG := \
 #
 PRODUCT_PACKAGES += \
     ip \
-    sleep \
     tcpdump \
     libbt-vendor \
     iw \
-    iw_vendor \
-    iw_common \
-    external_iw_license
+    iw_vendor
 
 ## Enable hidden features on Android
 PRODUCT_PACKAGES += \

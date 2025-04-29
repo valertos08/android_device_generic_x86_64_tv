@@ -13,7 +13,6 @@ PRODUCT_PACKAGES := \
     hwcomposer.drm_gbm_cros hwcomposer.drm_gbm_cros_celadon \
     gralloc.minigbm_dmabuf gralloc.minigbm gralloc.minigbm_arcvm gralloc.minigbm_gbm_mesa \
     gralloc.gbm gralloc.gbm_hack gralloc.gbm_noscanout \
-    libGLES_mesa    \
     libtxc_dxtn     \
     modetest \
     vulkan.intel \
@@ -32,26 +31,15 @@ PRODUCT_PACKAGES += \
     libGLESv1_CM_mesa \
     libGLESv2_mesa \
     libgallium_dri \
-    libglapi \
     libgbm_mesa_wrapper \
     dri_gbm \
-    i965_drv_video \
     crocus_drv_video \
     iHD_drv_video \
-    libgallium_drv_video \
     vainfo \
     amdgpu.ids
 
 PRODUCT_VENDOR_PROPERTIES += \
     debug.angle.feature_overrides_enabled=preferLinearFilterForYUV
-
-# ANGLE provides an OpenGL implementation built on top of Vulkan.
-#PRODUCT_PACKAGES += \
-
-
-# GL/Vk implementation for gfxstream
-#PRODUCT_PACKAGES += \
-
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.opengles.aep.xml:system/etc/permissions/android.hardware.opengles.aep.xml \

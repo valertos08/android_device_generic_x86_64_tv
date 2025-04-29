@@ -43,7 +43,7 @@ PRODUCT_PACKAGES += \
 
 # Gatekeeper HAL
 PRODUCT_PACKAGES += \
-    android.hardware.gatekeeper-service.nonsecure
+    android.hardware.gatekeeper@1.0-service.software
 
 # Health HAL
 PRODUCT_PACKAGES += \
@@ -66,10 +66,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     power.x86 \
     android.hardware.power-service.example
-
-# RenderScript HAL
-PRODUCT_PACKAGES += \
-    android.hardware.renderscript@1.0-impl
 
 # Sensors HAL
 PRODUCT_PACKAGES += \

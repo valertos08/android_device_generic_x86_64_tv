@@ -1,18 +1,52 @@
 #
 # BoardConfig.mk for x86 platform
 #
+LOCAL_COMMON_TREE := device/generic/x86_64_tv
+
+# The generic product target doesn't have any hardware-specific pieces.
+TARGET_NO_BOOTLOADER := true
+TARGET_CPU_ABI := x86_64
+TARGET_ARCH := x86_64
+TARGET_ARCH_VARIANT := sandybridge
+
+TARGET_2ND_CPU_ABI := x86
+TARGET_2ND_ARCH := x86
+TARGET_2ND_ARCH_VARIANT := sandybridge
+TARGET_CPU_VARIANT := generic
+TARGET_2ND_CPU_VARIANT := generic
+
+ifeq ($(USE_LIBNDK_TRANSLATION_NB),true)
+include vendor/google/emu-x86/board/native_bridge_arm_on_x86.mk
+endif
+
+ifeq ($(USE_CROS_HOUDINI_NB),true)
+include vendor/google/chromeos-x86/board/native_bridge_arm_on_x86.mk
+endif
+
+ifeq ($(ANDROID_USE_INTEL_HOUDINI),true)
+include vendor/intel/proprietary/houdini/board/native_bridge_arm_on_x86.mk
+endif
+
+ifeq ($(ANDROID_USE_NDK_TRANSLATION),true)
+include vendor/google/proprietary/ndk_translation-prebuilt/board/native_bridge_arm_on_x86.mk
+endif
+
+TARGET_CPU_ABI_LIST_64_BIT := $(TARGET_CPU_ABI) $(NATIVE_BRIDGE_ABI_LIST_64_BIT)
+TARGET_CPU_ABI_LIST_32_BIT := $(TARGET_2ND_CPU_ABI) $(NATIVE_BRIDGE_ABI_LIST_32_BIT)
+TARGET_CPU_ABI_LIST := $(TARGET_CPU_ABI) $(TARGET_2ND_CPU_ABI) $(NATIVE_BRIDGE_ABI_LIST_32_BIT) $(NATIVE_BRIDGE_ABI_LIST_64_BIT)
+
+TARGET_USERIMAGES_USE_EXT4 := true
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 576716800
+BOARD_CACHEIMAGE_PARTITION_SIZE := 69206016
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_FLASH_BLOCK_SIZE := 512
+TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
 TARGET_BOARD_PLATFORM := android-x86
-
-LOCAL_COMMON_TREE := device/generic/common
 
 ## Switch to EROFS image instead of Squashfs
 USE_SQUASHFS := 0
 USE_EROFS := 1
-
-# Architecture
-TARGET_CPU_VARIANT := generic
-TARGET_2ND_CPU_VARIANT := generic
 
 # A/B
 AB_OTA_UPDATER := true
@@ -32,7 +66,6 @@ PRODUCT_FULL_TREBLE_OVERRIDE := true
 # Some framework code requires this to enable BT
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_LINUX := true
-#BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/generic/common/bluetooth
 BOARD_SEPOLICY_DIRS += system/bt/vendor_libs/linux/sepolicy
 BOARD_HAVE_BLUETOOTH_INTEL_ICNV := true
 BOARD_USE_LEGACY_UI := true
@@ -50,7 +83,6 @@ endif
 # the following variables could be overridden
 TARGET_PRELINK_MODULE := false
 TARGET_NO_KERNEL ?= false
-#TARGET_NO_RECOVERY ?= true
 TARGET_EXTRA_KERNEL_MODULES := 
 ifneq ($(filter efi_img,$(MAKECMDGOALS)),)
 TARGET_KERNEL_ARCH ?= x86_64
@@ -93,7 +125,6 @@ BOARD_USES_MINIGBM_INTEL := true
 BOARD_USES_GRALLOC1 := true
 BOARD_USES_IA_HWCOMPOSER := true
 TARGET_USES_HWC2 ?= true
-#BOARD_USES_VULKAN := true
 
 USE_CAMERA_STUB ?= false
 
@@ -110,8 +141,6 @@ ifneq ($(strip $(BOARD_GPU_DRIVERS)),)
 TARGET_HARDWARE_3D := true
 endif
 
-#BOARD_MESA3D_USES_MESON_BUILD := true
-#BOARD_MESA3D_CLASSIC_DRIVERS := i965
 BOARD_MESA3D_BUILD_LIBGBM := true
 BOARD_MESA3D_GALLIUM_DRIVERS := crocus iris i915 nouveau r600 radeonsi svga virgl zink softpipe llvmpipe
 BOARD_MESA3D_VULKAN_DRIVERS := amd intel intel_hasvk virtio swrast nouveau
@@ -121,7 +150,7 @@ BOARD_MESA3D_MESON_ARGS := -Dallow-kcmp=enabled
 BUILD_EMULATOR_OPENGL := true
 
 BOARD_KERNEL_CMDLINE := $(if $(filter x86_64,$(TARGET_ARCH) $(TARGET_KERNEL_ARCH)),, vmalloc=192M)
-TARGET_KERNEL_DIFFCONFIG := device/generic/common/selinux_diffconfig
+TARGET_KERNEL_DIFFCONFIG := $(LOCAL_COMMON_TREE)/selinux_diffconfig
 
 # Atom specific
 ifeq ($(IS_INTEL_ATOM),true)
@@ -183,13 +212,6 @@ endif
 
 DEVICE_PRODUCT_COMPATIBILITY_MATRIX_FILE := $(LOCAL_COMMON_TREE)/manifest_framework.xml
 
-#BOARD_SEPOLICY_DIRS += device/generic/common/sepolicy/nonplat \
-#                       system/bt/vendor_libs/linux/sepolicy \
-#                       device/generic/common/sepolicy/celadon/graphics/mesa \
-#                       device/generic/common/sepolicy/celadon/thermal \
-#                       vendor/intel/proprietary/houdini/sepolicy \
-#                       vendor/google/proprietary/widevine-prebuilt/sepolicy
-#
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(LOCAL_COMMON_TREE)/sepolicy/plat_private
 SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(LOCAL_COMMON_TREE)/sepolicy/public
 BOARD_VENDOR_SEPOLICY_DIRS += $(LOCAL_COMMON_TREE)/sepolicy/vendor
@@ -208,11 +230,6 @@ BUILD_BROKEN_USES_BUILD_HOST_STATIC_LIBRARY := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 BUILD_BROKEN_PLUGIN_VALIDATION := soong-llvm19
 BUILD_BROKEN_INCORRECT_PARTITION_IMAGES := true
-
-#ifeq ($(ANDROID_USE_INTEL_HOUDINI),true)
-#include vendor/intel/proprietary/houdini/board/native_bridge_arm_on_x86.mk
-#endif
-
 STAGEFRIGHT_AVCENC_CFLAGS := -DANDROID_GCE
 
 # Properties
@@ -229,5 +246,5 @@ TARGET_INIT_VENDOR_LIB ?= //$(LOCAL_COMMON_TREE):init_x86
 TARGET_RECOVERY_DEVICE_MODULES ?= init_x86
 
 # Include GloDroid components
-include device/generic/common/glodroid/BoardConfig_glodroid.mk
+include $(LOCAL_COMMON_TREE)/glodroid/BoardConfig_glodroid.mk
 
