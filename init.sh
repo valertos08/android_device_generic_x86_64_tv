@@ -305,12 +305,6 @@ function init_hal_bluetooth()
 		start btattach
 	fi
 
-	if [ "$BTLINUX_HAL" = "1" ]; then
-		start btlinux-1.1
-	else
-		start vendor.bluetooth-1-1
-	fi
-
 	if [ "$BT_BLE_DISABLE" = "1" ]; then
 		set_property bluetooth.core.le.disabled true
 		set_property bluetooth.hci.disabled_commands 246

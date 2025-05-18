@@ -50,7 +50,6 @@ PRODUCT_PROPERTY_OVERRIDES := \
     ro.lmk.kill_timeout_ms=100 \
     ro.arch=x86 \
     persist.rtc_local_time=1 \
-    bluetooth.rfkill=1 \
     dalvik.vm.useautofastjni=true \
     ro.surface_flinger.max_frame_buffer_acquired_buffers=3 \
     audio.safemedia.bypass=true \
