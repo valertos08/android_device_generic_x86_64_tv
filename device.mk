@@ -131,6 +131,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.sip.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.sip.xml \
     frameworks/native/data/etc/android.software.voice_recognizers.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.voice_recognizers.xml \
     frameworks/native/data/etc/android.software.webview.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.webview.xml \
+    frameworks/native/data/etc/android.hardware.keystore.app_attest_key.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.keystore.app_attest_key.xml \
     external/thermal_daemon/data/thermal-conf.xml:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-daemon/thermal-conf.xml \
     external/thermal_daemon/data/thermal-cpu-cdev-order.xml:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-daemon/thermal-cpu-cdev-order.xml \
     $(LOCAL_PATH)/OEMBlackList:$(TARGET_COPY_OUT_VENDOR)/etc/misc/.OEMBlackList \

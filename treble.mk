@@ -43,7 +43,7 @@ PRODUCT_PACKAGES += \
 
 # Gatekeeper HAL
 PRODUCT_PACKAGES += \
-    android.hardware.gatekeeper@1.0-service.software
+    com.android.hardware.gatekeeper.nonsecure
 
 # Health HAL
 PRODUCT_PACKAGES += \
@@ -53,6 +53,22 @@ PRODUCT_PACKAGES += \
 # Keymaster HAL
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@4.1-service
+
+# Keymint HAL
+PRODUCT_PACKAGES += \
+    android.hardware.security.keymint-service
+
+#
+# Non-secure implementation of AuthGraph HAL for compliance.
+#
+PRODUCT_PACKAGES += \
+    com.android.hardware.security.authgraph
+
+#
+# Non-secure implementation of Secretkeeper HAL for compliance.
+#
+PRODUCT_PACKAGES += \
+    com.android.hardware.security.secretkeeper
 
 # Light HAL
 PRODUCT_PACKAGES += \
