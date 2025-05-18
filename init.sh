@@ -635,12 +635,15 @@ function init_hal_power()
 
 function init_hal_thermal()
 {
+	export USE_THERMAL_HAL=${USE_THERMAL_HAL:-1}
+
     # Check if thermald needs to be disabled
     # 1. VMs (QEMU, VMware, Oracle VirtualBox)
     # 2. AMD CPUs
     case "$VENDOR" in
         *QEMU*|*VMware*)
             export THERMALD_DISABLE=${THERMALD_DISABLE:-1}
+			USE_THERMAL_HAL=${USE_THERMAL_HAL:-0}
             ;;
         *)
             ;;
@@ -648,6 +651,7 @@ function init_hal_thermal()
 
     if [[ "$BOARD" == *VirtualBox* ]]; then
         export THERMALD_DISABLE=${THERMALD_DISABLE:-1}
+		USE_THERMAL_HAL=${USE_THERMAL_HAL:-0}
     fi
 
     if grep -q "AuthenticAMD" /proc/cpuinfo; then
@@ -657,6 +661,11 @@ function init_hal_thermal()
     if [ "$THERMALD_DISABLE" -lt 1 ]; then
         start thermal-daemon
     fi
+
+    if [ "$USE_THERMAL_HAL" -ge 1 ]; then
+		stop vendor.thermal-example
+		start vendor.thermal-aidl-intel
+	fi
 }
 
 function init_hal_sensors()
