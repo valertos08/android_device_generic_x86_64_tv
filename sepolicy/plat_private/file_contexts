@@ -1,10 +1,10 @@
 # surfaceflinger
 /dev/dri(/.*)?               u:object_r:gpu_device:s0
 /dev/tty0                    u:object_r:gpu_device:s0
-/vendor/lib{64}?/libgbm_mesa_wrapper.so     u:object_r:same_process_hal_file:s0
-/vendor/bin/hw/android\.hardware\.graphics\.allocator@4\.0-service\.minigbm_gbm_mesa        u:object_r:hal_graphics_allocator_default_exec:s0
+/(vendor|system/vendor)/lib{64}?/libgbm_mesa_wrapper.so     u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.graphics\.allocator@4\.0-service\.minigbm_gbm_mesa        u:object_r:hal_graphics_allocator_default_exec:s0
 /(vendor|system/vendor)/lib(64)?/libgallium_dri\.so							u:object_r:same_process_hal_file:s0
-/vendor/bin/hw/android\.hardware\.graphics\.composer@2\.1-service-clone              u:object_r:hal_graphics_composer_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.graphics\.composer@2\.1-service-clone              u:object_r:hal_graphics_composer_default_exec:s0
 
 # Files in rootfs
 /boot(/.*)?       u:object_r:bootdir_file:s0
