@@ -119,3 +119,7 @@ PRODUCT_PACKAGES += \
 
 # A collection of scripts at scripts/
 PRODUCT_PACKAGES += blisspath boot-mode-selection.sh recovery.bms.sh
+
+## ATV
+PRODUCT_PACKAGES += \
+    DocumentsUI
