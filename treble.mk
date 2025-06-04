@@ -42,7 +42,7 @@ PRODUCT_PACKAGES += \
 
 # Gatekeeper HAL
 PRODUCT_PACKAGES += \
-    com.android.hardware.gatekeeper.nonsecure
+    android.hardware.gatekeeper@1.0-service.software
 
 # Health HAL
 PRODUCT_PACKAGES += \
