@@ -27,10 +27,6 @@ $(call inherit-product, vendor/lineage/config/common_tv.mk)
 BOARD_IS_GO_BUILD := true
 $(call inherit-product,$(LOCAL_PATH)/../device.mk)
 
-# Gapps if found
-GMS_VARIANT := minimal
-$(call inherit-product-if-exists, vendor/gapps_tv/x86/x86-vendor.mk)
-
 # Overrides
 PRODUCT_NAME := lineage_x86_64_tv_go
 PRODUCT_BRAND := Android-x86

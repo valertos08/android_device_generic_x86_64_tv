@@ -23,9 +23,6 @@ $(call inherit-product, vendor/lineage/config/common_tv.mk)
 # Include from Android-x86 device
 $(call inherit-product,$(LOCAL_PATH)/device.mk)
 
-# Gapps if found
-$(call inherit-product-if-exists, vendor/gapps_tv/x86/x86-vendor.mk)
-
 # Overrides
 PRODUCT_NAME := lineage_x86_64_tv
 PRODUCT_BRAND := Android-x86
