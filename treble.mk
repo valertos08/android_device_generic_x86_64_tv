@@ -101,8 +101,7 @@ PRODUCT_PACKAGES += \
 
 # Thermal HAL
 PRODUCT_PACKAGES += \
-    com.android.hardware.thermal.intel \
-    com.android.hardware.thermal
+    android.hardware.thermal@2.0-service.intel
 
 # Bootctrl HAL
 PRODUCT_PACKAGES += \
