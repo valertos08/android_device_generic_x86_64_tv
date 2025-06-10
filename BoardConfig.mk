@@ -63,6 +63,9 @@ BOARD_ROOT_EXTRA_FOLDERS := boot
 # Full treble
 PRODUCT_FULL_TREBLE_OVERRIDE := true
 
+# No AVB
+BOARD_AVB_ENABLE := false
+
 # Some framework code requires this to enable BT
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_LINUX := true
