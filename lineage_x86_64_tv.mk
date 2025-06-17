@@ -18,6 +18,7 @@ $(call inherit-product,$(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, device/google/atv/products/atv_base.mk)
 
 # Inherit some common Lineage stuff.
+TARGET_ATV_FORCE_1080_SCALING := false
 $(call inherit-product, vendor/lineage/config/common_tv.mk)
 
 # Include from Android-x86 device
