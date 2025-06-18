@@ -22,6 +22,7 @@ TARGET_ATV_FORCE_1080_SCALING := false
 $(call inherit-product, vendor/lineage/config/common_tv.mk)
 
 # Include from Android-x86 device
+BOARD_IS_ZENITH_BUILD :=true
 $(call inherit-product,$(LOCAL_PATH)/device.mk)
 
 # Overrides
