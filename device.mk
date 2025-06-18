@@ -267,3 +267,6 @@ PRODUCT_VENDOR_PROPERTIES += drm.service.enabled=true
 
 PRODUCT_REQUIRES_INSECURE_EXECMEM_FOR_SWIFTSHADER := true
 
+# Custom Lineage OTA server
+PRODUCT_PRODUCT_PROPERTIES += \
+    lineage.updater.uri=https://lineageos-tv-x86.github.io/ota/api/v1/{device}_{type}
