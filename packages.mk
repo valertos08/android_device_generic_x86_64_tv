@@ -54,12 +54,6 @@ PRODUCT_PACKAGES += \
     hcitool \
     thermal-daemon
 
-# Stagefright FFMPEG plugins
-PRODUCT_PACKAGES += \
-    libffmpeg_extractor \
-    libffmpeg_omx \
-    media_codecs_ffmpeg.xml
-
 # Third party apps
 PRODUCT_PACKAGES += \
     libnativebridge-headers \

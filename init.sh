@@ -511,34 +511,6 @@ function init_hal_hwcomposer()
 
 function init_hal_media()
 {
-	# Check if we want to use codec2
-	if [ -z ${CODEC2_LEVEL+x} ]; then
-		echo ""
-	else
-		set_property debug.stagefright.ccodec $CODEC2_LEVEL
-	fi
-
-	# Disable YUV420 planar on OMX codecs
-	if [ "$OMX_NO_YUV420" -ge "1" ]; then
-		set_property ro.yuv420.disable true
-	else
-		set_property ro.yuv420.disable false
-	fi
-
-	if [ "$BOARD" == "Jupiter" ] && [ "$VENDOR" == "Valve" ]
-	then
-		FFMPEG_CODEC2_PREFER=${FFMPEG_CODEC2_PREFER:-1}
-	fi
-
-#FFMPEG Codec Setup
-## Turn on/off FFMPEG OMX by default
-	if [ "$FFMPEG_OMX_CODEC" -ge "1" ]; then
-	    set_property media.sf.omx-plugin libffmpeg_omx.so
-    	set_property media.sf.extractor-plugin libffmpeg_extractor.so
-	else
-	    set_property media.sf.omx-plugin ""
-    	set_property media.sf.extractor-plugin ""
-	fi
 
 ## Enable logging
     if [ "$FFMPEG_CODEC_LOG" -ge "1" ]; then
@@ -549,12 +521,6 @@ function init_hal_media()
         set_property media.sf.hwaccel 0
     else
         set_property media.sf.hwaccel 1
-    fi
-## Put c2.ffmpeg to the highest rank amongst the media codecs
-    if [ "$FFMPEG_CODEC2_PREFER" -ge "1" ]; then
-        set_property debug.ffmpeg-codec2.rank 0
-    else
-        set_property debug.ffmpeg-codec2.rank 4294967295
     fi
 ## FFMPEG deinterlace, we will put both software mode and VA-API one here
 	if [ -z "${FFMPEG_CODEC2_DEINTERLACE+x}" ]; then
@@ -574,6 +540,20 @@ function init_hal_media()
 	else
 	    set_property debug.ffmpeg-codec2.hwaccel.drm 0
 	fi
+
+## Handle which GPU driver will use which pixel format
+## c2.ffmpeg can be able to switch now
+	case "$(readlink /sys/class/graphics/fb0/device/driver)" in
+		*virtio_gpu|*virtio-pci|*nouveau|*radeon|*vmwgfx*)
+			set_property persist.ffmpeg-codec2.pixel_format RGBX_8888
+			;;
+		*i915|*xe|*amdgpu)
+			set_property persist.ffmpeg-codec2.pixel_format YUV_420
+			;;
+		*)
+			set_property persist.ffmpeg-codec2.pixel_format RGB_565
+			;;
+	esac
 
 }
 
