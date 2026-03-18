@@ -19,3 +19,4 @@ CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 
 bash bootable/aaropa/download.sh
 bash ${CURRENT_DIR}/download_sof-firmware.sh
+bash ${CURRENT_DIR}/download_ids.sh

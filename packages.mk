@@ -87,6 +87,9 @@ PRODUCT_PACKAGES += \
     iw \
     iw_vendor
 
+# usb.ids & pci.ids
+PRODUCT_PACKAGES += usb.ids pci.ids
+
 ## Enable hidden features on Android
 PRODUCT_PACKAGES += \
 	pc.xml \
