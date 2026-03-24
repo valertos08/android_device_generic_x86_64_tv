@@ -90,6 +90,9 @@ PRODUCT_PACKAGES += \
 # usb.ids & pci.ids
 PRODUCT_PACKAGES += usb.ids pci.ids
 
+# wireless-regdb
+PRODUCT_PACKAGES += regulatory.db regulatory.db.p7s
+
 ## Enable hidden features on Android
 PRODUCT_PACKAGES += \
 	pc.xml \

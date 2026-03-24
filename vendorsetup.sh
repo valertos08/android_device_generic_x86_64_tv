@@ -21,3 +21,4 @@ bash bootable/aaropa/download.sh
 bash ${CURRENT_DIR}/download_sof-firmware.sh
 bash ${CURRENT_DIR}/download_ids.sh
 bash ${CURRENT_DIR}/download_toolchain.sh
+bash ${CURRENT_DIR}/download_wireless-regdb.sh
