@@ -19,6 +19,8 @@ $(call inherit-product, device/google/atv/products/atv_base.mk)
 
 # Inherit lowram TV config for Go build
 $(call inherit-product, device/google/atv/products/atv_lowram_defaults.mk)
+PRODUCT_PACKAGES += \
+    TvLowRamOverlay
 
 # Inherit some common Lineage stuff.
 TARGET_ATV_FORCE_1080_SCALING := false
