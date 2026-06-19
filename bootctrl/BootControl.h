@@ -16,54 +16,32 @@
 
 #pragma once
 
-#include <android/hardware/boot/1.2/IBootControl.h>
-#include <hidl/MQDescriptor.h>
-#include <hidl/Status.h>
+#include <aidl/android/hardware/boot/BnBootControl.h>
 #include <libboot_control/libboot_control.h>
 #include "x86_boot_control_private.h"
 
-namespace android {
-namespace hardware {
-namespace boot {
-namespace V1_2 {
-namespace implementation {
+namespace aidl::android::hardware::boot {
 
-using ::android::hardware::Return;
-using ::android::hardware::Void;
-using ::android::hardware::boot::V1_0::BoolResult;
-using ::android::hardware::boot::V1_2::IBootControl;
-using ::android::hardware::boot::V1_1::MergeStatus;
-
-class BootControl : public IBootControl {
+class BootControl final : public BnBootControl {
   public:
-    bool Init();
-
-    // Methods from ::android::hardware::boot::V1_0::IBootControl follow.
-    Return<uint32_t> getNumberSlots() override;
-    Return<uint32_t> getCurrentSlot() override;
-    Return<void> markBootSuccessful(markBootSuccessful_cb _hidl_cb) override;
-    Return<void> setActiveBootSlot(uint32_t slot, setActiveBootSlot_cb _hidl_cb) override;
-    Return<void> setSlotAsUnbootable(uint32_t slot, setSlotAsUnbootable_cb _hidl_cb) override;
-    Return<BoolResult> isSlotBootable(uint32_t slot) override;
-    Return<BoolResult> isSlotMarkedSuccessful(uint32_t slot) override;
-    Return<void> getSuffix(uint32_t slot, getSuffix_cb _hidl_cb) override;
-
-    // Methods from ::android::hardware::boot::V1_1::IBootControl follow.
-    Return<bool> setSnapshotMergeStatus(MergeStatus status) override;
-    Return<MergeStatus> getSnapshotMergeStatus() override;
-
-    // Methods from ::android::hardware::boot::V1_2::IBootControl.
-    Return<uint32_t> getActiveBootSlot() override;
+    BootControl();
+    ::ndk::ScopedAStatus getActiveBootSlot(int32_t* _aidl_return) override;
+    ::ndk::ScopedAStatus getCurrentSlot(int32_t* _aidl_return) override;
+    ::ndk::ScopedAStatus getNumberSlots(int32_t* _aidl_return) override;
+    ::ndk::ScopedAStatus getSnapshotMergeStatus(
+            ::aidl::android::hardware::boot::MergeStatus* _aidl_return) override;
+    ::ndk::ScopedAStatus getSuffix(int32_t in_slot, std::string* _aidl_return) override;
+    ::ndk::ScopedAStatus isSlotBootable(int32_t in_slot, bool* _aidl_return) override;
+    ::ndk::ScopedAStatus isSlotMarkedSuccessful(int32_t in_slot, bool* _aidl_return) override;
+    ::ndk::ScopedAStatus markBootSuccessful() override;
+    ::ndk::ScopedAStatus setActiveBootSlot(int32_t in_slot) override;
+    ::ndk::ScopedAStatus setSlotAsUnbootable(int32_t in_slot) override;
+    ::ndk::ScopedAStatus setSnapshotMergeStatus(
+            ::aidl::android::hardware::boot::MergeStatus in_status) override;
 
   private:
-    android::bootable::BootControl impl_;
-    android::bootable::BootControlExt implext_;
+    ::android::bootable::BootControl impl_;
+    ::android::bootable::BootControlExt implext_;
 };
 
-extern "C" IBootControl* HIDL_FETCH_IBootControl(const char* name);
-
-}  // namespace implementation
-}  // namespace V1_1
-}  // namespace boot
-}  // namespace hardware
-}  // namespace android
+}  // namespace aidl::android::hardware::boot

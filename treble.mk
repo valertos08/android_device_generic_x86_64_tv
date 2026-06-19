@@ -103,9 +103,8 @@ PRODUCT_PACKAGES += \
 
 # Bootctrl HAL
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.2-x86impl \
-    android.hardware.boot@1.2-x86impl.recovery \
-    android.hardware.boot@1.2-service
+    android.hardware.boot-service.x86 \
+    android.hardware.boot-service.x86_recovery
 
 PRODUCT_SOONG_NAMESPACES += \
     hardware/google/camera \
