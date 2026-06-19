@@ -2,3 +2,4 @@ service vendor.boot-x86 /vendor/bin/hw/android.hardware.boot-service.x86
     class early_hal
     user root
     group root
+    disabled
