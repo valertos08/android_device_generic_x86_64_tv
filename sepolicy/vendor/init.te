@@ -10,3 +10,4 @@ allow init mnt_vendor_file:dir mounton;
 
 # DMI
 r_dir_file(init, vendor_sysfs_dmi_id)
+r_dir_file(init, vendor_sysfs_dmi_tables)

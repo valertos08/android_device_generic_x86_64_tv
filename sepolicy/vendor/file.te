@@ -1,2 +1,3 @@
 # DMI
 type vendor_sysfs_dmi_id, fs_type, sysfs_type;
+type vendor_sysfs_dmi_tables, fs_type, sysfs_type;
