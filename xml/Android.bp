@@ -1,0 +1,51 @@
+//
+// Copyright (C) 2026 BlissLabs
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+prebuilt_etc {
+    name: "pc.xml",
+    src: "pc.xml",
+    sub_dir: "hidden_xml",
+    vendor: true,
+    required: ["pc_none.xml"],
+}
+
+prebuilt_etc {
+    name: "hpe.xml",
+    src: "hpe.xml",
+    sub_dir: "hidden_xml",
+    vendor: true,
+    required: ["hpe_none.xml"],
+}
+
+prebuilt_etc {
+    name: "pc_none.xml",
+    src: "pc_none.xml",
+    sub_dir: "permissions",
+    vendor: true,
+    stem: "pc.xml",
+}
+
+prebuilt_etc {
+    name: "hpe_none.xml",
+    src: "hpe_none.xml",
+    sub_dir: "sysconfig",
+    vendor: true,
+    stem: "hpe.xml",
+}
+
+prebuilt_etc {
+    name: "fakeboot.xml",
+    src: "fakeboot.xml",
+    sub_dir: "hidden_xml",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "noble.xml",
+    src: "noble.xml",
+    sub_dir: "hidden_xml",
+    vendor: true,
+}

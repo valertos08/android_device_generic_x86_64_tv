@@ -10,6 +10,7 @@
 
 #include <libinit_dalvik_heap.h>
 #include <libinit_utils.h>
+#include <libinit_bliss.h>
 
 #include "vendor_init.h"
 
@@ -91,4 +92,5 @@ void vendor_load_properties() {
     set_dalvik_heap();
     set_misc_properties();
     set_properties_from_dmi_id();
+    set_bliss_features();
 }

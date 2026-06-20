@@ -96,7 +96,9 @@ PRODUCT_PACKAGES += regulatory.db regulatory.db.p7s
 ## Enable hidden features on Android
 PRODUCT_PACKAGES += \
 	pc.xml \
-	hpe.xml
+	hpe.xml \
+	fakeboot.xml \
+	noble.xml
 
 # Some additional CLI programs
 PRODUCT_PACKAGES += tput dialog alsa-info.sh tree lspci dmidecode vainfo evtest efibootmgr
