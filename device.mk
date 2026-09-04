@@ -48,6 +48,10 @@ PRODUCT_PACKAGES += \
     init.magisk.sh \
     magisk-stub
 
+# Browser (WebView-based; LineageOS ships Jelly for non-ATV, we want it on TV too)
+PRODUCT_PACKAGES += \
+    Jelly
+
 PRODUCT_PACKAGES_DEBUG += \
     update_engine_client
 
