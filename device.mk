@@ -41,7 +41,12 @@ PRODUCT_PACKAGES_DEBUG += \
 PRODUCT_PACKAGES += \
     update_engine \
     update_engine_sideload \
-    update_verifier
+    update_verifier \
+    magisk \
+    magiskpolicy \
+    magisk.rc \
+    init.magisk.sh \
+    magisk-stub
 
 PRODUCT_PACKAGES_DEBUG += \
     update_engine_client
