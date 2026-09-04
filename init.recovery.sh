@@ -23,7 +23,7 @@ function init_graphics()
 
 	# Only search for a card if GPU_OVERRIDE hasn't already been set
 	if [ -z "$GPU_OVERRIDE" ]; then
-		# Loop with a timeout (e.g., 20 attempts, 0.5s each = 10 seconds max)
+		# Loop with a timeout (e.g., 20 attempts, 1s each = 20 seconds max)
 		for attempt in $(seq 1 20); do
 			for i in $(seq 0 9); do
 				if [ -c "/dev/dri/card$i" ]; then
@@ -46,7 +46,7 @@ function init_graphics()
 					break 2
 				fi
 			done
-			sleep 0.5
+			sleep 1
 		done
 	fi
 
@@ -66,7 +66,7 @@ function init_graphics()
 
 	# Wait for Framebuffer device
 	local fb_node="fb0"
-	for attempt in $(seq 1 20); do
+	for attempt in $(seq 1 5); do
 		for j in $(seq 0 9); do
 			# Check if the driver symlink is populated
 			if [ -L "/sys/class/graphics/fb$j/device/driver" ]; then
@@ -83,7 +83,7 @@ function init_graphics()
 				break 2
 			fi
 		done
-		sleep 0.5
+		sleep 1
 	done
 
 	case "$(readlink /sys/class/graphics/$fb_node/device/driver)" in

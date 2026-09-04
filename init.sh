@@ -352,7 +352,7 @@ function init_hal_gralloc()
 	# we accidentally pick it. Search to see if the remains of simpledrm is still here 
 	# and put in another for loop and run until we get the correct result.
 	if [ -z "$GPU_OVERRIDE" ]; then
-		# Loop with a timeout (e.g., 20 attempts, 0.5s each = 10 seconds max)
+		# Loop with a timeout (e.g., 20 attempts, 1s each = 20 seconds max)
 		for attempt in $(seq 1 20); do
 			for i in $(seq 0 9); do
 				if [ -c "/dev/dri/card$i" ]; then
@@ -375,7 +375,7 @@ function init_hal_gralloc()
 					break 2
 				fi
 			done
-			sleep 0.5
+			sleep 1
 		done
 	fi
 
