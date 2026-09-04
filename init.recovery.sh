@@ -17,33 +17,51 @@ function set_prop_if_empty()
 
 function init_graphics()
 {
-	# Loop with a timeout (e.g., 20 attempts, 0.5s each = 10 seconds max)
-	for attempt in $(seq 1 20); do
-		for i in $(seq 0 9); do
-			if [ -c "/dev/dri/card$i" ]; then
-				local driver_name=""
-				
-				if [ -L "/sys/class/drm/card$i/device/driver" ]; then
-					driver_name=$(basename $(readlink /sys/class/drm/card$i/device/driver))
-				elif [ -f "/sys/class/drm/card$i/device/uevent" ]; then
-					driver_name=$(grep DRIVER= /sys/class/drm/card$i/device/uevent | cut -d= -f2)
-				fi
+	# Remember if the user already picked a GPU through GPU_OVERRIDE
+	local user_override=""
+	[ -n "$GPU_OVERRIDE" ] && user_override=1
 
-				# Ignore simple framebuffers or unpopulated sysfs entries
-				if [[ "$driver_name" == *simple* ]] || [ -z "$driver_name" ]; then
-					if [ "$HWACCEL" != "0" ]; then
-						continue
+	# Only search for a card if GPU_OVERRIDE hasn't already been set
+	if [ -z "$GPU_OVERRIDE" ]; then
+		# Loop with a timeout (e.g., 20 attempts, 0.5s each = 10 seconds max)
+		for attempt in $(seq 1 20); do
+			for i in $(seq 0 9); do
+				if [ -c "/dev/dri/card$i" ]; then
+					local driver_name=""
+					
+					if [ -L "/sys/class/drm/card$i/device/driver" ]; then
+						driver_name=$(basename $(readlink /sys/class/drm/card$i/device/driver))
+					elif [ -f "/sys/class/drm/card$i/device/uevent" ]; then
+						driver_name=$(grep DRIVER= /sys/class/drm/card$i/device/uevent | cut -d= -f2)
 					fi
-				fi
 
-				break 2
-			fi
+					# Ignore simple framebuffers or unpopulated sysfs entries
+					if [[ "$driver_name" == *simple* ]] || [ -z "$driver_name" ]; then
+						if [ "$HWACCEL" != "0" ]; then
+							continue
+						fi
+					fi
+
+					GPU_OVERRIDE="card$i"
+					break 2
+				fi
+			done
+			sleep 0.5
 		done
-		sleep 0.5
-	done
+	fi
+
+	# Fallback just in case /dev/dri is completely empty or inaccessible
+	GPU_OVERRIDE=${GPU_OVERRIDE:-card0}
 
 	if [ "$HWACCEL" == "0" ]; then
 		set_property ro.minui.graphics_backend fbdev
+	else
+		set_property ro.minui.graphics_backend drm
+		# Pin the exact drm device only when the user explicitly picked one;
+		# otherwise let minui scan and pick the first connected card.
+		if [ -n "$user_override" ]; then
+			set_property ro.minui.drm_device /dev/dri/$GPU_OVERRIDE
+		fi
 	fi
 
 	# Wait for Framebuffer device
