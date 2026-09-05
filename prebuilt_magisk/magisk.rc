@@ -1,0 +1,13 @@
+# Magisk systemless root for Android-x86 (in-tree, no PID1 hijack)
+# post-fs-data stage (builds /sbin tmpfs + installs stub + runs --post-fs-data)
+# is invoked directly from root/init.x86.rc to guarantee ordering vs vold signal.
+# Here we only trigger the two later stages, which re-use /sbin/magisk built
+# by the post-fs-data runner.
+
+# late_start: bring up the su/manager daemon socket
+on late_start
+    exec u:r:init:s0 -- /system/bin/sh /system/etc/init.magisk.sh service
+
+# boot completed: tell the daemon boot is done (resets bootloop, re-ensures manager)
+on property:sys.boot_completed=1
+    exec u:r:init:s0 -- /system/bin/sh /system/etc/init.magisk.sh bootcomplete

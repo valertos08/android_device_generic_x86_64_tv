@@ -1,0 +1,19 @@
+android_app_import {
+    name: "NeoStore",
+    apk: "Neo_Store_1.2.6_release.apk",
+    privileged: true,
+    certificate: "platform",
+    dex_preopt: {
+        enabled: false,
+    },
+    required: [
+        "privapp_whitelist_com.machiav3lli.fdroid",
+    ],
+}
+
+prebuilt_etc {
+    name: "privapp_whitelist_com.machiav3lli.fdroid",
+    sub_dir: "permissions",
+    src: "privapp-permissions-com.machiav3lli.fdroid.xml",
+    filename_from_src: true,
+}

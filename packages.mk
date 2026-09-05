@@ -87,6 +87,9 @@ PRODUCT_PACKAGES += \
     iw \
     iw_vendor
 
+# Neo Store - F-Droid client, preinstalled as privileged system app (INSTALL_PACKAGES)
+PRODUCT_PACKAGES += NeoStore
+
 # usb.ids & pci.ids
 PRODUCT_PACKAGES += usb.ids pci.ids
 

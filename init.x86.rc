@@ -58,6 +58,10 @@ on post-fs-data
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
 
+    # Magisk: build /sbin, install stub (trusted_cert), run --post-fs-data stage
+    # Order matters vs vold signal above, hence inline here.
+    exec u:r:init:s0 -- /system/bin/sh /system/etc/init.magisk.sh
+
     setprop persist.vendor.thermal.mode thermal-daemon
     mkdir /data/vendor/thermal-daemon 0660 system system
 
