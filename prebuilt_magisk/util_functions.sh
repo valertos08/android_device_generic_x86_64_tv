@@ -2,8 +2,8 @@
 # Magisk General Utility Functions
 ############################################
 
-MAGISK_VER='30.7'
-MAGISK_VER_CODE=30700
+MAGISK_VER='31.0'
+MAGISK_VER_CODE=31000
 
 ###################
 # Global Variables
