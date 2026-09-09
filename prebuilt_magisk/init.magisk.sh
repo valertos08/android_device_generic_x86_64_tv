@@ -69,6 +69,12 @@ ln -sf ./magiskpolicy $MAGISKTMP/supolicy
 # replace it with a symlink to the /sbin su, exactly as real Magisk does
 # (su = magisk applet, kept in tmpfs, nothing stored in /system itself).
 ln -sf /sbin/su /system/xbin/su 2>/dev/null
+# 2b. Ensure apps can traverse /system/xbin (AOSP ships dir as 750 root:shell,
+# but our su is a symlink so untrusted_app needs +x to resolve it).
+chmod o+rx /system/xbin 2>/dev/null
+# 2c. Place a "magisk" marker next to su so the Manager's PATH scan doesn't
+# flag it as a third-party root (see MainActivity.showUnsupportedMessage).
+ln -sf /sbin/magisk /system/xbin/magisk 2>/dev/null
 
 # 3. Stub for trusted_cert (in-tree so first boot has it before /data exists)
 mkdir -p /sbin/.magisk/device /sbin/.magisk/worker 2>/dev/null

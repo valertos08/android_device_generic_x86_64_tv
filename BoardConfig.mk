@@ -3,6 +3,16 @@
 #
 LOCAL_COMMON_TREE := device/generic/x86_64_tv
 
+# Always stamp a fresh build timestamp so a new build always reports the
+# current date (ro.build.date / ro.build.version.incremental). soong_ui
+# rewrites out/build_date.txt on every full run, but stamping it here covers
+# runs that go through kati/make directly. Ninja's "buildinfo.prop: ... ||
+# out/build_date.txt" is order-only (does NOT retrigger when the stamp
+# changes), so we also delete buildinfo.prop: with the output gone, ninja is
+# forced to regenerate it and pick up the fresh timestamp. build.prop and the
+# OTA metadata (post-timestamp / post-build-incremental) then follow.
+$(shell mkdir -p "$(OUT_DIR)" && date +%s > "$(OUT_DIR)/build_date.txt" && rm -f "$(OUT_DIR)/target/product/x86_64_tv/obj/PACKAGING/system_build_prop_intermediates/buildinfo.prop")
+
 # The generic product target doesn't have any hardware-specific pieces.
 TARGET_NO_BOOTLOADER := true
 TARGET_CPU_ABI := x86_64
@@ -213,7 +223,8 @@ DEVICE_MANIFEST_FILE := $(LOCAL_COMMON_TREE)/manifest.xml
 DEVICE_PRODUCT_COMPATIBILITY_MATRIX_FILE := $(LOCAL_COMMON_TREE)/manifest_framework.xml
 
 BOARD_SEPOLICY_DIRS += $(LOCAL_COMMON_TREE)/sepolicy/celadon/thermal \
-						$(LOCAL_COMMON_TREE)/sepolicy/celadon/thermal/thermal-daemon
+						$(LOCAL_COMMON_TREE)/sepolicy/celadon/thermal/thermal-daemon \
+						vendor/intel/proprietary/houdini/sepolicy
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(LOCAL_COMMON_TREE)/sepolicy/plat_private
 SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(LOCAL_COMMON_TREE)/sepolicy/public
 BOARD_VENDOR_SEPOLICY_DIRS += $(LOCAL_COMMON_TREE)/sepolicy/vendor

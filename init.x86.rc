@@ -1,4 +1,5 @@
 import /vendor/etc/init/hw/init.low_performance.rc
+import /vendor/etc/init/hw/init.los_codec.rc
 
 on early-init
     write /proc/sys/kernel/ctrl-alt-del 1

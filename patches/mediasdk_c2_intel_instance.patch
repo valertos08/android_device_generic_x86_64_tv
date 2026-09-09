@@ -1,0 +1,48 @@
+diff --git a/c2_store/manifest_media_c2_default.xml b/c2_store/manifest_media_c2_default.xml
+index 7558d87..330cfc9 100644
+--- a/c2_store/manifest_media_c2_default.xml
++++ b/c2_store/manifest_media_c2_default.xml
+@@ -1,7 +1,18 @@
+ <manifest version="1.0" type="device">
++    <!-- HIDL fragment (service registers android.hardware.media.c2@1.0::IComponentStore/intel) -->
++    <hal>
++        <name>android.hardware.media.c2</name>
++        <transport>hwbinder</transport>
++        <version>1.2</version>
++        <interface>
++            <name>IComponentStore</name>
++            <instance>intel</instance>
++        </interface>
++    </hal>
++    <!-- AIDL fragment -->
+     <hal format="aidl">
+         <name>android.hardware.media.c2</name>
+         <version>1</version>
+-        <fqname>IComponentStore/default</fqname>
++        <fqname>IComponentStore/intel</fqname>
+     </hal>
+-</manifest>
++</manifest>
+\ No newline at end of file
+diff --git a/c2_store/src/mfx_c2_service.cpp b/c2_store/src/mfx_c2_service.cpp
+index 34362cf..a0e1570 100644
+--- a/c2_store/src/mfx_c2_service.cpp
++++ b/c2_store/src/mfx_c2_service.cpp
+@@ -102,7 +102,7 @@ void runAidlService() {
+         LOG(ERROR) << "Cannot create Codec2's IComponentStore service.";
+     } else {
+         const std::string serviceName =
+-            std::string(IComponentStore::descriptor) + "/default";
++            std::string(IComponentStore::descriptor) + "/intel";
+         binder_exception_t ex = AServiceManager_addService(
+                 store->asBinder().get(), serviceName.c_str());
+         if (ex != EX_NONE) {
+@@ -145,7 +145,7 @@ void runHidlService() {
+         if (store == nullptr) {
+             LOG(ERROR) << "Cannot create Codec2's IComponentStore service.";
+         } else {
+-            constexpr char const* serviceName = "default";
++            constexpr char const* serviceName = "intel";
+             if (store->registerAsService(serviceName) != OK) {
+                 LOG(ERROR) << "Cannot register Codec2's IComponentStore service"
+                               " with instance name << \""
