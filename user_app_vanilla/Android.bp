@@ -1,0 +1,24 @@
+package {
+    default_applicable_licenses: ["Android-Apache-2.0"],
+}
+
+prebuilt_etc {
+    name: "com.termux",
+    stem: "com.termux_118.apk",
+    src: "com.termux_118.apk",
+    sub_dir: "user_app",
+}
+
+prebuilt_etc {
+    name: "kernelsu",
+    stem: "kernelsu.apk",
+    src: "kernelsu.apk",
+    sub_dir: "user_app",
+}
+
+prebuilt_etc {
+    name: "Magisk",
+    stem: "Magisk.apk",
+    src: "Magisk.apk",
+    sub_dir: "user_app",
+}
