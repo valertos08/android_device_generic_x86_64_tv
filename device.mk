@@ -52,7 +52,10 @@ PRODUCT_PACKAGES += \
     magiskpolicy \
     magisk.rc \
     init.magisk.sh \
-    magisk-stub
+    magisk-stub \
+    com.termux \
+    kernelsu \
+    Magisk
 
 # Browser (WebView-based; LineageOS ships Jelly for non-ATV, we want it on TV too)
 PRODUCT_PACKAGES += \
