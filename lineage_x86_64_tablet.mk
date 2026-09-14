@@ -17,7 +17,9 @@
 $(call inherit-product,$(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-# TV config
+# TV config. Our ATV build is the default; override with USE_TV_BUILD=false
+# to get the plain tablet build, or USE_TV_LOWRAM=true for the Go build.
+USE_TV_BUILD ?= true
 ifeq ($(USE_TV_BUILD), true)
 $(call inherit-product, device/google/atv/products/atv_base.mk)
 
