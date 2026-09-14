@@ -1,0 +1,58 @@
+package {
+    default_applicable_licenses: ["Android-Apache-2.0"],
+}
+
+cc_prebuilt_binary {
+    name: "magisk",
+    srcs: ["magisk"],
+    check_elf_files: false,
+}
+
+cc_prebuilt_binary {
+    name: "magiskpolicy",
+    srcs: ["magiskpolicy"],
+    check_elf_files: false,
+}
+
+cc_prebuilt_binary {
+    name: "magisk-busybox",
+    stem: "busybox",
+    srcs: ["busybox"],
+    check_elf_files: false,
+}
+
+cc_prebuilt_binary {
+    name: "magiskinit",
+    srcs: ["magiskinit"],
+    check_elf_files: false,
+}
+
+cc_prebuilt_binary {
+    name: "magiskboot",
+    srcs: ["magiskboot"],
+    check_elf_files: false,
+}
+
+prebuilt_etc {
+    name: "magisk-util-functions",
+    src: "util_functions.sh",
+    sub_dir: "magisk",
+}
+
+prebuilt_etc {
+    name: "magisk.rc",
+    src: "magisk.rc",
+    sub_dir: "init",
+}
+
+prebuilt_etc {
+    name: "init.magisk.sh",
+    src: "init.magisk.sh",
+}
+
+prebuilt_etc {
+    name: "magisk-stub",
+    stem: "stub.apk",
+    src: "stub.apk",
+    sub_dir: "magisk",
+}
