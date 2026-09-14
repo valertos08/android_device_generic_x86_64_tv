@@ -25,7 +25,7 @@ $(call inherit-product, device/google/atv/products/atv_base.mk)
 
 TARGET_ATV_FORCE_1080_SCALING := false
 $(call inherit-product, vendor/lineage/config/common_tv.mk)
-$(call inherit-product,$(LOCAL_PATH)/../device.mk)
+$(call inherit-product,$(LOCAL_PATH)/device.mk)
 
 
 endif
