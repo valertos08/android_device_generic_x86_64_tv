@@ -52,7 +52,7 @@ prebuilt_etc {
 
 prebuilt_etc {
     name: "magisk-stub",
-    stem: "stub.apk",
+    filename: "stub.apk",
     src: "stub.apk",
     sub_dir: "magisk",
 }
