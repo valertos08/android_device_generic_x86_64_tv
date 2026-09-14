@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<MediaCodecs>
+    <Settings>
+        <Setting name="max-video-encoder-input-buffers" value="12" />
+    </Settings>
+    <Include href="media_codecs_ffmpeg_c2_audio.xml" />
+    <Include href="media_codecs_intel_c2_video.xml" />
+</MediaCodecs>

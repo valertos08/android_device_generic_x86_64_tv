@@ -32,7 +32,11 @@ PRODUCT_PACKAGES += \
 
 # Media codec
 PRODUCT_PACKAGES += \
-    android.hardware.media.c2-ffmpeg-service
+    android.hardware.media.c2-ffmpeg-service \
+    android.hardware.media.c2-service.intel \
+    libmfx_c2_components_hw \
+    libvpl \
+    libmfx-gen
 
 # DumpState HAL
 PRODUCT_PACKAGES += \

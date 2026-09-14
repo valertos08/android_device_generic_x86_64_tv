@@ -1,0 +1,69 @@
+# LOS21ATV "Graphics & decoding" --- native setting application.
+#
+# TvSettings (GraphicsDecodeOptionsFragment) stages the user's choices into
+# persist.sys.los.*; init applies them here with property triggers, so no
+# shell script has to translate settings at boot. persist.* props load with
+# /data (before post-fs on this build) and therefore before any component
+# starts (on boot). init.sh only provides GPU auto-detected defaults for the
+# "unset/auto" case and uses set_prop_if_empty so it never overrides a choice.
+
+# --- gralloc / hwcomposer backend ---
+on property:persist.sys.los.hardware.gralloc=minigbm
+    setprop ro.hardware.gralloc minigbm
+    setprop ro.hardware.hwcomposer drm_minigbm
+    setprop debug.ui.default_mapper 2
+    setprop debug.ui.default_gralloc 2
+    start vendor.gralloc-2-0
+
+on property:persist.sys.los.hardware.gralloc=gbm
+    setprop ro.hardware.gralloc gbm
+    setprop ro.hardware.hwcomposer drm
+    setprop debug.ui.default_mapper 2
+    setprop debug.ui.default_gralloc 2
+    start vendor.gralloc-2-0
+
+on property:persist.sys.los.hardware.gralloc=minigbm_arcvm
+    setprop ro.hardware.gralloc minigbm_arcvm
+    setprop ro.hardware.hwcomposer drm_minigbm
+    setprop debug.ui.default_mapper 4
+    setprop debug.ui.default_gralloc 4
+    start vendor.graphics.allocator-4-0-arcvm
+
+on property:persist.sys.los.hardware.gralloc=minigbm_gbm_mesa
+    setprop ro.hardware.gralloc minigbm_gbm_mesa
+    setprop ro.hardware.hwcomposer drm_minigbm
+    setprop debug.ui.default_mapper 4
+    setprop debug.ui.default_gralloc 4
+    start vendor.graphics.allocator-4-0-gbm_mesa
+
+on property:persist.sys.los.hardware.gralloc=minigbm_nouveau
+    setprop ro.hardware.gralloc minigbm_nouveau
+    setprop ro.hardware.hwcomposer drm_minigbm
+    setprop debug.ui.default_mapper 4
+    setprop debug.ui.default_gralloc 4
+    start vendor.graphics.allocator-4-0-nouveau
+
+# --- media hwaccel flags (ffmpeg-codec2 engine) ---
+on property:persist.sys.los.media.sf.hwaccel=1
+    setprop media.sf.hwaccel 1
+on property:persist.sys.los.media.sf.hwaccel=0
+    setprop media.sf.hwaccel 0
+
+on property:persist.sys.los.media.sf.hwaccel.drm=1
+    setprop debug.ffmpeg-codec2.hwaccel.drm 1
+on property:persist.sys.los.media.sf.hwaccel.drm=0
+    setprop debug.ffmpeg-codec2.hwaccel.drm 0
+
+on property:persist.sys.los.media.sf.hwaccel.force=1
+    setprop debug.ffmpeg-codec2.fast 1
+on property:persist.sys.los.media.sf.hwaccel.force=0
+    setprop debug.ffmpeg-codec2.fast 0
+
+# --- codec2 engine: swap the manifest with a bind mount, no file rewriting ---
+# Manual choice (ffmpeg|intel) is applied here. The "auto" case is deliberately
+# NOT handled in rc: init.sh picks intel-vs-ffmpeg by GPU, so it must perform
+# the bind mount itself after GPU detection (see init.sh init_hal_media).
+on property:persist.sys.los.codec2-impl=ffmpeg
+    mount none /vendor/etc/media_codecs/codecs_ffmpeg.xml /vendor/etc/media_codecs.xml bind
+on property:persist.sys.los.codec2-impl=intel
+    mount none /vendor/etc/media_codecs/codecs_intel.xml /vendor/etc/media_codecs.xml bind

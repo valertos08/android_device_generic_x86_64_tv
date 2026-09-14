@@ -3,6 +3,16 @@
 #
 LOCAL_COMMON_TREE := device/generic/x86_64_tablet
 
+# Always stamp a fresh build timestamp so a new build always reports the
+# current date (ro.build.date / ro.build.version.incremental). soong_ui
+# rewrites out/build_date.txt on every full run, but stamping it here covers
+# runs that go through kati/make directly. Ninja's "buildinfo.prop: ... ||
+# out/build_date.txt" is order-only (does NOT retrigger when the stamp
+# changes), so we also delete buildinfo.prop: with the output gone, ninja is
+# forced to regenerate it and pick up the fresh timestamp. build.prop and the
+# OTA metadata (post-timestamp / post-build-incremental) then follow.
+$(shell mkdir -p "$(OUT_DIR)" && date +%s > "$(OUT_DIR)/build_date.txt" && rm -f "$(OUT_DIR)/target/product/x86_64_tablet/obj/PACKAGING/system_build_prop_intermediates/buildinfo.prop")
+
 # The generic product target doesn't have any hardware-specific pieces.
 TARGET_NO_BOOTLOADER := true
 TARGET_CPU_ABI := x86_64

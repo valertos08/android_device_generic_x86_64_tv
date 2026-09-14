@@ -6,6 +6,7 @@
         <interface>
             <name>IComponentStore</name>
             <instance>ffmpeg</instance>
+            <instance>intel</instance>
         </interface>
     </hal>
     <hal format="hidl" optional="true">
@@ -31,7 +32,8 @@
         <version>1</version>
         <interface>
             <name>IComponentStore</name>
-            <instance>ffmpeg</instance>        
+            <instance>ffmpeg</instance>
+            <instance>intel</instance>        
         </interface>
     </hal>
 </compatibility-matrix>

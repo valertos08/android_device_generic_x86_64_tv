@@ -95,6 +95,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ppp/ip-down:$(TARGET_COPY_OUT_SYSTEM)/etc/ppp/ip-down \
     $(LOCAL_PATH)/ppp/peers/gprs:$(TARGET_COPY_OUT_SYSTEM)/etc/ppp/peers/gprs \
     $(LOCAL_PATH)/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
+    $(LOCAL_PATH)/codec_manifests/codecs_base.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs/codecs_base.xml \
+    $(LOCAL_PATH)/codec_manifests/codecs_intel.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs/codecs_intel.xml \
+    $(LOCAL_PATH)/codec_manifests/codecs_ffmpeg.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs/codecs_ffmpeg.xml \
+    $(LOCAL_PATH)/init.los_codec.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.los_codec.rc \
+    $(LOCAL_PATH)/media_codecs_intel_c2_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_intel_c2_video.xml \
+    $(LOCAL_PATH)/media_codecs_ffmpeg_c2_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_ffmpeg_c2_audio.xml \
+    $(LOCAL_PATH)/mfx_c2_store.conf:$(TARGET_COPY_OUT_VENDOR)/etc/mfx_c2_store.conf \
     $(LOCAL_PATH)/media_profiles.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml \
     $(LOCAL_PATH)/fstab.internal.x86:$(TARGET_COPY_OUT_SYSTEM)/vendor/etc/fstab.internal.x86 \
     frameworks/av/media/libstagefright/data/media_codecs_google_c2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2.xml \

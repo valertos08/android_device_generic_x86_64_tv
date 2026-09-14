@@ -388,6 +388,11 @@ function init_hal_gralloc()
 	set_property gralloc.gbm.device /dev/dri/$GPU_OVERRIDE
 	set_property vendor.hwc.drm.device /dev/dri/$GPU_OVERRIDE
 
+	# The "Graphics & decoding" settings screen chooses the gralloc backend via
+	# persist.sys.los.hardware.gralloc, applied natively by init.los_codec.rc
+	# before this script runs. The auto-detected defaults below use
+	# set_prop_if_empty so they never override a user choice.
+
 	case "$GPU" in
 		*virtio_gpu|*virtio-pci)
 			HWC=${HWC:-drm_minigbm}
@@ -415,12 +420,10 @@ function init_hal_gralloc()
 			;&
 		*radeon)
 			# Remove when Virtualbox got svga working well
-		    if { [[ "$BOARD" != *VirtualBox* ]] && 
-				 [ "$HWACCEL" != "0" ]; } || 
+			if { [[ "$BOARD" != *VirtualBox* ]] &&
+				 [ "$HWACCEL" != "0" ]; } ||
 				 [ "$HWACCEL" == "1" ]; then
-				${HWC:+set_property ro.hardware.hwcomposer $HWC}
-				set_property ro.hardware.gralloc ${GRALLOC:-gbm}
-				set_drm_mode
+				true
 			else
 				export HWACCEL=0
 			fi
@@ -430,25 +433,11 @@ function init_hal_gralloc()
 			;;
 	esac
 
-	if [ "$GRALLOC4_MINIGBM" = "1" ]; then
+	if [ "$(getprop debug.ui.default_gralloc)" = "4" ]; then
 		set_property debug.ui.default_mapper 4
 		set_property debug.ui.default_gralloc 4
-		case "$GRALLOC" in
-			minigbm)
-				start vendor.graphics.allocator-4-0
-			;;
-			minigbm_arcvm)
-				start vendor.graphics.allocator-4-0-arcvm
-			;;
-			minigbm_gbm_mesa)
-				start vendor.graphics.allocator-4-0-gbm_mesa
-			;;
-			minigbm_nouveau)
-				start vendor.graphics.allocator-4-0-nouveau
-			;;
-			*)
-			;;
-		esac
+		# A mapper4 backend was chosen on the settings screen; init.los_codec.rc
+		# already started the matching allocator service.
 	else
 		set_property debug.ui.default_mapper 2
 		set_property debug.ui.default_gralloc 2
@@ -546,16 +535,21 @@ function init_hal_hwcomposer()
 function init_hal_media()
 {
 
+## User choices made on the "Graphics & decoding" settings screen are applied
+## natively by init.los_codec.rc (property triggers on persist.sys.los.*) before
+## this script runs. Only the kernel-cmdline defaults are handled here, using
+## set_prop_if_empty so a user choice is never overridden.
+
 ## Enable logging
     if [ "$FFMPEG_CODEC_LOG" -ge "1" ]; then
         set_property debug.ffmpeg.loglevel verbose
     fi	
-## Disable HWAccel (currently only VA-API) and use software rendering
-    if [ "$FFMPEG_HWACCEL_DISABLE" -ge "1" ]; then
-        set_property media.sf.hwaccel 0
-    else
-        set_property media.sf.hwaccel 1
-    fi
+## Disable HWAccel (currently only VA-API) and use software rendering.
+	if [ "$FFMPEG_HWACCEL_DISABLE" -ge "1" ]; then
+		set_prop_if_empty media.sf.hwaccel 0
+	else
+		set_prop_if_empty media.sf.hwaccel 1
+	fi
 ## FFMPEG deinterlace, we will put both software mode and VA-API one here
 	if [ -z "${FFMPEG_CODEC2_DEINTERLACE+x}" ]; then
 		echo ""
@@ -568,11 +562,11 @@ function init_hal_media()
 		set_property debug.ffmpeg-codec2.deinterlace.vaapi $FFMPEG_CODEC2_DEINTERLACE_VAAPI
 	fi
 ## Handle DRM prime on ffmpeg codecs, we will disable by default due to 
-## the fact that it doesn't work with gbm_gralloc yet
+## the fact that it doesn't work with gbm_gralloc yet.
 	if [ "$FFMPEG_CODEC2_DRM" -ge "1" ]; then
-	    set_property debug.ffmpeg-codec2.hwaccel.drm 1
+	    set_prop_if_empty debug.ffmpeg-codec2.hwaccel.drm 1
 	else
-	    set_property debug.ffmpeg-codec2.hwaccel.drm 0
+	    set_prop_if_empty debug.ffmpeg-codec2.hwaccel.drm 0
 	fi
 
 ## Handle which GPU driver will use which pixel format
@@ -592,6 +586,23 @@ function init_hal_media()
 			set_property persist.ffmpeg-codec2.pixel_format RGB_565
 			;;
 	esac
+
+## Codec2 engine selection ("Codec2 backend" on the settings screen).
+## A manual choice (persist.sys.los.codec2-impl=ffmpeg|intel) is applied by
+## init.los_codec.rc via a bind mount and takes precedence. The "auto" (or
+## unset) case is resolved HERE by GPU: Intel MediaSDK on i915/xe, FFmpeg on
+## everything else (Intel's VAAPI driver has no HW on other vendors).
+	local c2choice="$(getprop persist.sys.los.codec2-impl 2>/dev/null)"
+	if [ -z "$c2choice" ] || [ "$c2choice" = "auto" ]; then
+		case "$GPU" in
+			*i915|*xe)
+				mount --bind /vendor/etc/media_codecs/codecs_intel.xml /vendor/etc/media_codecs.xml 2>/dev/null
+				;;
+			*)
+				mount --bind /vendor/etc/media_codecs/codecs_ffmpeg.xml /vendor/etc/media_codecs.xml 2>/dev/null
+				;;
+		esac
+	fi
 
 }
 
