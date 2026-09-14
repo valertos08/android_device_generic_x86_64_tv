@@ -181,7 +181,9 @@ PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
 # AAPT
 ifeq ($(USE_TV_BUILD), true)
 PRODUCT_CHARACTERISTICS := tv
-PRODUCT_AAPT_PREF_CONFIG := tvdpi
+# 213dpi == tvdpi; the numeric form is required by soong fsgen (AOSP16),
+# which panics parsing the literal "tvdpi".
+PRODUCT_AAPT_PREF_CONFIG := 213dpi
 else
 PRODUCT_CHARACTERISTICS := tablet
 PRODUCT_AAPT_CONFIG := normal large xlarge mdpi hdpi
